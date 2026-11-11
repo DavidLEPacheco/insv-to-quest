@@ -2,11 +2,13 @@
 
 A local Windows workflow for turning an Insta360 X6 recording into a Gaussian splat and a walkable Unity viewer. Run the full model on a Windows computer over Quest Link/Air Link, or train a separate smaller model and build a standalone Quest APK.
 
-**Validation status:** Processing and both builds passed on a fresh 130-second recording, but the **first standalone Quest 3 wear test failed performance/comfort**: severe judder with GPU saturation. The APK installs and enters tracked VR; it is not yet a validated comfortable standalone viewer. The Windows startup and fixed-view editor checks passed. See [validation notes](docs/validation.md). Treat this as an experimental starter and try a short recording first.
+**Validation status:** Processing and both builds passed on a fresh 130-second recording. The original standalone defaults caused severe judder; **the corrected mobile profile met the 72 Hz target in a stationary Quest 3 test**, with zero stale frames across ten steady-state samples using a 100,000-splat test model. Moving-head comfort and larger models remain unverified. The Windows startup and fixed-view editor checks passed. See [validation notes](docs/validation.md). Treat this as an experimental starter and try a short recording first.
 
 This is a reusable starting point extracted from a working scan-to-VR workflow. It includes the processing runner, a clean Unity template, a modified Gaussian renderer and build/install commands. It contains **no personal scans, faces, footage, room layouts, accounts or multiplayer services**.
 
 **Standalone is a quality/performance compromise.** This baseline trains a 400,000-splat model for Quest; it does not reproduce a multi-million-splat PC house at identical quality or promise 72 FPS. It does not include an advanced streamed LOD/occlusion system. Start with a small room and compare the result in the headset.
+
+Quest defaults favor responsiveness: 30% splat render width/height, an 8-bit splat target, SH2 shading and two-pass depth sorting. Expect a noticeably softer image than PC VR. The PC target retains full render scale, SH3 and its floating-point target. If you copied an earlier `config.local.json`, change **`quest.render_scale` to `0.3`** before rebuilding; pulling the update does not replace your local config or an installed APK. Use a new build work folder if the old folder rejects changed inputs.
 
 ## You need
 

@@ -138,9 +138,11 @@ namespace ScanViewer.Editor
             splat.m_ShaderDebugPoints=AssetDatabase.LoadAssetAtPath<Shader>(shaders+"GaussianDebugRenderPoints.shader");
             splat.m_ShaderDebugBoxes=AssetDatabase.LoadAssetAtPath<Shader>(shaders+"GaussianDebugRenderBoxes.shader");
             splat.m_CSSplatUtilities=AssetDatabase.LoadAssetAtPath<ComputeShader>(shaders+"SplatUtilities.compute");
-            splat.m_RenderScale=Mathf.Clamp(request.renderScale,.5f,1);splat.m_SHOrder=3;splat.m_SHLodEnabled=false;
-            splat.m_SortNthFrame=1;splat.m_SortPasses=4;splat.m_AdaptiveSort=false;splat.m_CullChunks=true;
-            splat.m_HighPrecisionRT=true;splat.m_QuadExtent=3;splat.m_ContributionCullThreshold=0;
+            // Reuse the established mobile profile; PC keeps its full-quality settings.
+            splat.m_RenderScale=Mathf.Clamp(request.renderScale, mobile ? .25f : .5f, 1);splat.m_SHOrder=mobile?2:3;splat.m_SHLodEnabled=false;
+            splat.m_SortNthFrame=1;splat.m_SortPasses=mobile?2:4;splat.m_AdaptiveSort=false;splat.m_CullChunks=true;
+            splat.m_HighPrecisionRT=!mobile;splat.m_QuadExtent=mobile?2.5f:3;splat.m_ContributionCullThreshold=mobile ? .1f : 0;
+            Debug.Log($"[ScanViewer] Render profile: mobile={mobile}, scale={splat.m_RenderScale}, fp16={splat.m_HighPrecisionRT}, sort={splat.m_SortPasses}, sh={splat.m_SHOrder}");
             var rig=new GameObject("Viewer rig");var controller=rig.AddComponent<ViewerRig>();
             controller.startPosition=V(placement.startPosition);controller.startForward=V(placement.startForward);
             var b=placement.walkBounds;if(b?.Length!=4 || b[0]>=b[2] || b[1]>=b[3])throw new BuildFailedException("Invalid walk bounds");
