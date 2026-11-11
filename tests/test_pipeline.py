@@ -30,7 +30,7 @@ class PipelineTests(unittest.TestCase):
     def test_input_ambiguity_requires_filename(self):
         (self.root/'a.insv').write_bytes(b'a');(self.root/'b.insv').write_bytes(b'b')
         with self.assertRaises(ValueError):capture_input(str(self.root))
-        self.assertEqual(capture_input(str(self.root/'a.insv')),self.root/'a.insv')
+        self.assertTrue(capture_input(str(self.root/'a.insv')).samefile(self.root/'a.insv'))
 
     def test_unauthorized_headset_is_not_selected(self):
         with self.assertRaises(RuntimeError):select_device('List of devices attached\none\tunauthorized\n')
