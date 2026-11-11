@@ -14,8 +14,9 @@ Initial source release, 11 November 2026. This is a **starter workflow**, not a 
 | Public source audit | Passed for disallowed payloads, personal review terms, profile paths, credentials and network addresses; original upstream notices retained |
 | Fresh recording through processing and training | Passed on one complete 130.497-second native recording: 420 synchronized pairs, 840/840 registered images, metric reconstruction, all depth maps, separate 1,000-step PC/Quest runs, full checkpoints and valid PLY exports |
 | Real checkpoint recovery | Passed: a private copy resumed from step 500 to 510; original checkpoint hashes were unchanged |
-| Generic placement for the real recording | Generated for both targets; floor height and spawn still need visual/headset verification |
-| Packaging the newly trained real models | **Pending disk space.** The build preflight correctly refused to start with less than its required 6 GiB free. The earlier synthetic PC/Quest builds passed; they do not complete this real-model test |
+| Generic placement and rendering for the real recording | Both imported models rendered upright room views at four fixed directions in the editor; exact floor height, scale and headset spawn still require a wear check |
+| Packaging the newly trained real models | Passed: Windows player with 149,994 splats; self-contained Quest APK with 99,996 splats, approximately 62.2 MiB. APK CRC, signature, package identity, ARM64 and OpenXR libraries verified |
+| Compiled real-model Windows player startup | Passed: remained running for 15 seconds, loaded the renderer and recorded camera rendering, with no asset/shader loading errors. No connected headset was available |
 | Generic player headset wear test | **Not yet performed.** The originating renderer was used in VR, but the new minimal rig needs its own on-device comfort, stereo and performance check |
 | Large-house standalone fidelity / 72 FPS | **Not claimed.** A smaller separately trained model cannot guarantee the PC master's detail |
 
@@ -35,4 +36,6 @@ The run exposed slow mask combination: replacing Pillow's minimum filter with Sc
 
 Recovery was exercised with a copy of the real 500-step checkpoint **and its run configuration**, then continued to step 510. Copying only the checkpoint directory initially failed because Spirula also needs the parent `config.json`; keeping the whole training directory and referenced dataset avoids that omission. The normal runner resumes in the original workspace.
 
-Processing is complete. Real-model Unity packaging, visual placement verification and headset checks remain pending. No private recording, model, mask preview or personal scene configuration is published here.
+Processing and both real-model builds are complete. The Windows player passed a startup check. Each imported model also passed four fixed-direction mono editor renders, with images visually inspected. The starting renders contained 306,993 visible pixels for the PC model and 307,038 for the Quest model at 640×480. The Quest asset review was rendered by the desktop editor; it is not a native Android GPU test or a stereo-performance result.
+
+Packaging initially stopped at the low-disk guard, then passed after explicitly approved rebuildable caches were cleared. The generated Unity import/build caches for these completed tests were also cleared afterward, while keeping their source assets, finished players, scan data and checkpoints. No headset was available over ADB, so installation, stereo comfort, precise floor height and actual Quest frame timing remain unverified for this generic player. No private recording, model, mask preview or personal scene configuration is published here.
