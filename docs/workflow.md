@@ -21,6 +21,8 @@ This adapter uses native lens images with Spirula's calibrated fisheye rig. It d
 | `unity-pc.json`, `unity-quest.json` | Paths to machine-local generated Unity projects containing personal assets |
 | `builds/` | Shareable players that contain the selected personal scan |
 
+For recovery, keep the training directory's `config.json` and `scene_transform.json` alongside its checkpoint directories, plus the referenced dataset. A checkpoint folder copied by itself is not a complete portable resume package: Spirula needs the parent run configuration and the training images/masks/depth data it names. The runner resumes within the existing work folder; moving an entire run to another machine may require path updates.
+
 The held-out cameras are preserved for external comparison. This starter does not yet generate a quantitative held-out PSNR/SSIM report or automatically pick the best checkpoint. Inspect the final PLY in Spirula and compare views in VR.
 
 Unity projects are generated under a short `%LOCALAPPDATA%/SV/<workspace-hash>/` path to avoid Windows path-length problems. They are machine-local and contain imported scan data. The work folder receipts locate them. Input-system configuration runs once in an editor invocation before the build invocation, so editor and player compilation agree.
