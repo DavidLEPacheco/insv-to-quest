@@ -2,7 +2,8 @@
 import os
 from pathlib import Path
 import numpy as np
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image, ImageDraw
+from scipy.ndimage import minimum_filter
 from pipeline import executable, write_json
 
 
@@ -32,7 +33,7 @@ def mask_capture(run):
                 with Image.open(data/'masks'/cam/target.name) as a,Image.open(predictions/f'frame_{i-start:05d}.png') as b:
                     if a.size != b.size or a.size != (3840,3840): raise ValueError('Native mask sizes differ')
                     # White keeps a pixel. Erode kept area slightly to cover operator outlines.
-                    keep=np.minimum(np.asarray(a.convert('L')),np.asarray(b.convert('L').filter(ImageFilter.MinFilter(9))))
+                    keep=np.minimum(np.asarray(a.convert('L')),minimum_filter(np.asarray(b.convert('L')),size=9,mode='nearest'))
                 fraction=float((keep<128).mean())
                 if fraction>.95: raise ValueError(f'Mask removes almost everything: {cam}/{photo.name}')
                 tmp=target.with_suffix('.partial.png'); Image.fromarray(keep).save(tmp); tmp.replace(target)

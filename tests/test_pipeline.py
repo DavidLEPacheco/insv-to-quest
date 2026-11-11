@@ -68,6 +68,15 @@ class PipelineTests(unittest.TestCase):
         (self.root/'capture.insv').write_bytes(b'private video')
         self.assertTrue(audit(self.root)[1])
 
+    def test_fast_mask_erosion_preserves_pixels_and_border(self):
+        from PIL import Image,ImageFilter
+        from scipy.ndimage import minimum_filter
+        rng=np.random.default_rng(7)
+        for raw in (rng.integers(0,256,(47,51),dtype=np.uint8),np.pad(np.zeros((3,3),dtype=np.uint8),10,constant_values=255)):
+            original=np.asarray(Image.fromarray(raw).filter(ImageFilter.MinFilter(9)))
+            fast=minimum_filter(raw,size=9,mode='nearest')
+            self.assertTrue(np.array_equal(original,fast))
+
     def test_placement_converts_z_up_without_wrong_floor_offset(self):
         run=self.root/'train';ck=run/'step-000005000.ckpt';model=generate(ck)
         (run/'scene_transform.json').write_text(json.dumps({'train_from_world':{'matrix_4x4':np.eye(4).tolist()}}))
