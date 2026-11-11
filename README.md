@@ -2,6 +2,8 @@
 
 A local Windows workflow for turning an Insta360 X6 recording into a Gaussian splat and a walkable Unity viewer. Run the full model on a Windows computer over Quest Link/Air Link, or train a separate smaller model and build a standalone Quest APK.
 
+**Validation status:** Python/CI checks and synthetic PC/Quest builds pass. A fresh real-recording test of the complete generalized pipeline is currently in progress. Until that result is recorded in [validation notes](docs/validation.md), treat this as an experimental starter and try a short recording first.
+
 This is a reusable starting point extracted from a working scan-to-VR workflow. It includes the processing runner, a clean Unity template, a modified Gaussian renderer and build/install commands. It contains **no personal scans, faces, footage, room layouts, accounts or multiplayer services**.
 
 **Standalone is a quality/performance compromise.** This baseline trains a 400,000-splat model for Quest; it does not reproduce a multi-million-splat PC house at identical quality or promise 72 FPS. It does not include an advanced streamed LOD/occlusion system. Start with a small room and compare the result in the headset.
