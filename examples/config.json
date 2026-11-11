@@ -7,5 +7,5 @@
   "keep_prompt": "",
   "capture_height_m": 1.6,
   "pc": {"steps": 30000, "splat_cap": 6000000, "resolution_divisor": 1, "render_scale": 1.0},
-  "quest": {"steps": 15000, "splat_cap": 400000, "resolution_divisor": 1, "render_scale": 0.3}
+  "quest": {"steps": 15000, "splat_cap": 100000, "resolution_divisor": 1, "render_scale": 0.3}
 }
