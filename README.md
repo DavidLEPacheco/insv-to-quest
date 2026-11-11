@@ -2,7 +2,7 @@
 
 A local Windows workflow for turning an Insta360 X6 recording into a Gaussian splat and a walkable Unity viewer. Run the full model on a Windows computer over Quest Link/Air Link, or train a separate smaller model and build a standalone Quest APK.
 
-**Validation status:** Python/CI checks pass. A fresh 130-second native recording passed extraction, masking, reconstruction, short training runs, export, checkpoint recovery and both Windows/Quest builds. The Windows player passed a startup check, and both imported models passed fixed-view editor rendering checks. The generic player still needs its own headset test. See [validation notes](docs/validation.md). Treat this as an experimental starter and try a short recording first.
+**Validation status:** Processing and both builds passed on a fresh 130-second recording, but the **first standalone Quest 3 wear test failed performance/comfort**: severe judder with GPU saturation. The APK installs and enters tracked VR; it is not yet a validated comfortable standalone viewer. The Windows startup and fixed-view editor checks passed. See [validation notes](docs/validation.md). Treat this as an experimental starter and try a short recording first.
 
 This is a reusable starting point extracted from a working scan-to-VR workflow. It includes the processing runner, a clean Unity template, a modified Gaussian renderer and build/install commands. It contains **no personal scans, faces, footage, room layouts, accounts or multiplayer services**.
 
